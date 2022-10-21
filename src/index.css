@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .raise:hover,
+  .raise:focus {
+    /* @apply shadow-xl; */
+    transform: translateY(-0.25em);
+  }
+  .raise {
+    transition: transform ease 100ms;
+  }
+
+  .card {
+    @apply raise hover:shadow-xl;
+  }
+
+  .click-pushed-down:active {
+    transform: scale(0.95, 0.95);
+  }
+}
+
+body {
+  font-family: "Source Sans Pro", sans-serif !important;
+}
+
+.wallet > .connect {
+  justify-content: start;
+}
