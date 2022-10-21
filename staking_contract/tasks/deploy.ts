@@ -39,7 +39,7 @@ task("deploy:v1", "Deploy vault contracts", async (_, { getNamedAccounts, deploy
     log: true,
   });
 
-  const WETH_VAULT = await deploy("Vault", {
+  const WETH_VAULT = await deploy("WBTC_VAULT", {
     from: deployer,
     contract: Vault__factory,
     gasLimit: 4000000,
@@ -64,7 +64,7 @@ task("deploy:v1", "Deploy vault contracts", async (_, { getNamedAccounts, deploy
     },
   });
 
-  const AVAX_VAULT = await deploy("Vault", {
+  const AVAX_VAULT = await deploy("AVAX_VAULT", {
     from: deployer,
     contract: Vault__factory,
     gasLimit: 4000000,
@@ -89,7 +89,7 @@ task("deploy:v1", "Deploy vault contracts", async (_, { getNamedAccounts, deploy
     },
   });
 
-  const WBTC_VAULT = await deploy("Vault", {
+  const WBTC_VAULT = await deploy("WBTC_VAULT", {
     from: deployer,
     contract: Vault__factory,
     gasLimit: 4000000,

@@ -11,6 +11,7 @@
   "dependencies": {
     "@chakra-ui/react": "^2.3.6",
     "@tanstack/react-query": "^4.12.0",
+    "@usedapp/core": "^1.1.5",
     "ethers": "^5.7.2",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
