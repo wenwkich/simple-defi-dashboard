@@ -35,7 +35,7 @@ contract Vault is ReentrancyGuardUpgradeable, OwnableUpgradeable, PausableUpgrad
     VaultParams public vaultParams;
     address public WETH;
 
-    mapping(address => uint256) public balanceOf;
+    mapping(address => uint256) public deposits;
 
     function initialize(address _weth, Vault.VaultParams calldata _vaultParams) public initializer {
         require(_weth != address(0), "!_weth");
@@ -73,7 +73,7 @@ contract Vault is ReentrancyGuardUpgradeable, OwnableUpgradeable, PausableUpgrad
     function _depositFor(uint256 amount, address creditor) private {
         uint256 totalWithDepositedAmount = IERC20(vaultParams.asset).balanceOf(address(this)) + amount;
         require(totalWithDepositedAmount <= vaultParams.cap, "Exceed cap");
-        balanceOf[creditor] += amount;
+        deposits[creditor] += amount;
     }
 
     function pause() public onlyOwner {
