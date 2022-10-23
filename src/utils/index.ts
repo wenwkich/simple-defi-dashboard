@@ -1,7 +1,14 @@
 import { BigNumber, ethers } from "ethers";
-import { formatEther, hexValue } from "ethers/lib/utils";
+import {
+  formatEther,
+  FormatTypes,
+  hexValue,
+  Interface,
+} from "ethers/lib/utils";
 import { Chain } from "@web3-onboard/common";
 import { TokenInfoWithBalanceAndIsNative } from "../interfaces";
+import { JsonFragment } from "@ethersproject/abi";
+import _ from "lodash";
 
 export const address = (entity: any) =>
   entity?.address ? entity.address : ethers.constants.AddressZero;
@@ -72,4 +79,23 @@ export const tryToConvertTokenToNative = async (
         native: true,
       }
     : tokenInfo;
+};
+
+export const erc20Abi = (() => {
+  const erc20StringAbi = [
+    "function balanceOf(address owner) view returns (uint)",
+  ];
+  return new Interface(erc20StringAbi).fragments.map((fragment) =>
+    JSON.parse(fragment.format(FormatTypes.json))
+  );
+})() as JsonFragment[];
+
+export const transformEs6MapToArrays = <K, V>(inputs: Map<K, V>) => {
+  return _.map(Array.from(inputs), ([, value]) => value);
+};
+
+export const transfromRecordToEs6Map = <K extends string, V>(
+  from: Partial<Record<K, V>>
+) => {
+  return new Map(Object.entries(from)) as Map<K, V>;
 };

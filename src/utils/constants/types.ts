@@ -1,14 +1,17 @@
-import { VAULTS_DEF } from "./vaults";
+import { VAULT_DECLARATIONS } from "./vaults";
 
 export type SupportedChainIdNames = "localhost" | "goerli";
-export type VaultsDef = typeof VAULTS_DEF;
-export type VaultNames = keyof VaultsDef;
+export type ContractNamespace = "tokens" | "vaults";
+export type VaultDeclarations = typeof VAULT_DECLARATIONS;
+export type VaultNames = keyof VaultDeclarations;
 
-export type Vault = {
+export type VaultDef = {
+  id: string;
+  nspace: ContractNamespace;
   address: string;
   name: string;
   description: string;
   emoji: string;
 };
-export type Vaults = Partial<Record<VaultNames, Vault>>;
-export type ChainIdVaults = Partial<Record<SupportedChainIdNames, Vaults>>;
+export type VaultDefs = Partial<Record<VaultNames, VaultDef>>;
+export type ChainIdVaults = Partial<Record<SupportedChainIdNames, VaultDefs>>;

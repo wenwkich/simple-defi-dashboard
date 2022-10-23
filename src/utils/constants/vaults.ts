@@ -1,13 +1,13 @@
 import deployments from "../deployments/deployments.json";
 import _ from "lodash";
-import { SupportedChainIdNames, VaultNames, Vaults } from "./types";
+import { SupportedChainIdNames, VaultDefs, VaultNames } from "./types";
 
 const deploymentsCasted = deployments as Partial<
   Record<SupportedChainIdNames, Record<VaultNames | string, string>>
 >;
 
 // define your basic info in this page
-export const VAULTS_DEF = {
+export const VAULT_DECLARATIONS = {
   ETH_VAULT: {
     name: "ETH Garden",
     description: "Maximize your ETH yield",
@@ -25,29 +25,31 @@ export const VAULTS_DEF = {
   },
 };
 
-export const getVaultInfo = (
+export const getVaultDef = (
   chainId: SupportedChainIdNames,
   vaultId: VaultNames
 ) => {
-  return getVaultInfos(chainId)[vaultId];
+  return getVaultDefs(chainId)[vaultId];
 };
 
-export const getVaultInfos = (chainId: SupportedChainIdNames) => {
+export const getVaultDefs = (chainId: SupportedChainIdNames) => {
   return _.reduce(
-    VAULTS_DEF,
+    VAULT_DECLARATIONS,
     (prev, curr, key) => {
-      const vault = deploymentsCasted[chainId];
-      if (!vault) {
+      const vaults = deploymentsCasted[chainId];
+      if (!vaults) {
         throw new Error("chainId not found in deployments");
       }
       return {
         ...prev,
         [key]: {
-          address: vault[key],
+          id: key,
+          nspace: "vault",
+          address: vaults[key],
           ...curr,
         },
       };
     },
-    {} as Vaults
+    {} as VaultDefs
   );
 };
