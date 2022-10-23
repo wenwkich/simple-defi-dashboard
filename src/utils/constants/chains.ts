@@ -19,6 +19,7 @@ const chainIdToName = _.reduce(
   {} as Record<number, SupportedChainIdNames>
 );
 
+export const getSupportedChains = () => chains;
 export const getChain = (chain: SupportedChainIdNames) => chains[chain];
 export const getChainNameFromChainId = (chainId: any) => chainIdToName[chainId];
 export const checkChainIdSupported = (chainId: any) =>

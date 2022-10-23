@@ -25,6 +25,3 @@ dist-ssr
 
 src/utils/typechain
 
-# temp
-src/components
-src/pages

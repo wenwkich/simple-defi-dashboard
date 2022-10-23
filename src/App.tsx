@@ -6,8 +6,20 @@ import NavWithWallet from "./components/nav/NavWithWallet";
 import { ChakraProvider } from "@chakra-ui/react";
 import StakingRoutes from "./StakingRoutes";
 
+const AppWrapper = ({ children }: PropsWithChildren<any>) => {
+  return <div className="flex flex-col h-screen">{children}</div>;
+};
+
+const BodyWrapper = ({ children }: PropsWithChildren<any>) => {
+  return (
+    <div className="flex justify-center py-10 flex-grow bg-[#FAFAFA]">
+      {children}
+    </div>
+  );
+};
+
 function App() {
-  const [count, setCount] = useState(0);
+  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>

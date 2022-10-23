@@ -35,7 +35,7 @@ export const useVaults = () => {
     getVaults: useCallback(
       (addresses: string[]) =>
         _.filter(queryResult.data?.vaults, (detail) =>
-          _.includes(addresses, detail.id)
+          _.includes(addresses, detail.address)
         ),
       [queryResult.data]
     ),
