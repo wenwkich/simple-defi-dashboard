@@ -3,7 +3,7 @@ import _ from "lodash";
 import { SupportedChainIdNames, VaultDefs, VaultNames } from "./types";
 
 const deploymentsCasted = deployments as Partial<
-  Record<SupportedChainIdNames, Record<VaultNames | string, string>>
+  Record<SupportedChainIdNames | string, Record<VaultNames | string, string>>
 >;
 
 // define your basic info in this page
@@ -25,18 +25,16 @@ export const VAULT_DECLARATIONS = {
   },
 };
 
-export const getVaultDef = (
-  chainId: SupportedChainIdNames,
-  vaultId: VaultNames
+export const getVaultDefs = (
+  chainName: SupportedChainIdNames | string | undefined
 ) => {
-  return getVaultDefs(chainId)[vaultId];
-};
-
-export const getVaultDefs = (chainId: SupportedChainIdNames) => {
   return _.reduce(
     VAULT_DECLARATIONS,
     (prev, curr, key) => {
-      const vaults = deploymentsCasted[chainId];
+      if (!chainName) {
+        throw new Error("Chain is not valid");
+      }
+      const vaults = deploymentsCasted[chainName];
       if (!vaults) {
         throw new Error("chainId not found in deployments");
       }

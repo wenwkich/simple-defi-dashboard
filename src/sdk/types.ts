@@ -40,7 +40,7 @@ export type TokenInfos = Record<
 >;
 
 export interface SdkOptions {
-  chainId: SupportedChainIdNames;
+  chainName: SupportedChainIdNames;
   provider: ethers.providers.BaseProvider;
   signer: ethers.Signer;
 }
@@ -68,5 +68,5 @@ export type SdkWriteOptions = Omit<SdkOptions, "provider">;
 export type AsyncFunc<R> = (...args: Array<any>) => Promise<R>;
 
 export type EthersFactory<P, R> = (ethersPartial: P) => AsyncFunc<R>;
-export type EthersWriteFactory<R> = EthersFactory<SdkWriteOptions, R>;
-export type EthersReadFactory<R> = EthersFactory<SdkReadOptions, R>;
+export type EthersWriteFactory<R> = EthersFactory<Partial<SdkWriteOptions>, R>;
+export type EthersReadFactory<R> = EthersFactory<Partial<SdkReadOptions>, R>;

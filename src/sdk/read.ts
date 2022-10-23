@@ -18,11 +18,11 @@ import { getVaultDefs } from "../utils/constants/vaults";
 import { erc20Abi } from "../utils";
 
 export const getVaultInfosSdk: EthersReadFactory<Results<VaultInfos>> =
-  ({ provider, chainId }) =>
+  ({ provider, chainName }) =>
   async () => {
     const nspace = "vaults";
 
-    const vaultDefs = getVaultDefs(chainId);
+    const vaultDefs = getVaultDefs(chainName);
     const toContract = (vaultAddress: string) => {
       return new Contract(vaultAddress, Vault__factory.abi);
     };
@@ -58,13 +58,13 @@ export const getVaultInfosSdk: EthersReadFactory<Results<VaultInfos>> =
 export const getUserSignInInfosSdk: EthersReadFactory<
   Results<VaultSignInInfos | (TokenSignInInfo & TokenInfo)>
 > =
-  ({ provider, chainId }) =>
+  ({ provider, chainName }) =>
   async (
     userAddress: string,
     vaultInfos: Readonly<VaultInfos>,
     tokens: string[]
   ) => {
-    const vaultDefs = getVaultDefs(chainId);
+    const vaultDefs = getVaultDefs(chainName);
     const toVaultContract = (address: string) => {
       return new Contract(address, Vault__factory.abi);
     };

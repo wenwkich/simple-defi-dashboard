@@ -6,10 +6,13 @@ import { ContractNamespace } from "../utils/constants/types";
 import { transformEs6MapToArrays, transfromRecordToEs6Map } from "../utils";
 
 export const doMulticall = async <R>(
-  provider: BaseProvider,
+  provider: BaseProvider | undefined,
   inputs: MulticallInputs<R>
 ) => {
   try {
+    if (!provider) {
+      throw new Error("No provider is found");
+    }
     const ethcallProvider = new EthcallProvider();
     await ethcallProvider.init(provider);
 
