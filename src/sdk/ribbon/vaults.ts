@@ -1,6 +1,7 @@
 import deployments from "./deployments/ribbon-deployments.json";
 import _ from "lodash";
-import { SupportedChainIdNames, VaultDefs, VaultNames } from "./types";
+import { VaultDefs, VaultNames } from "./types";
+import { SupportedChainIdNames } from "../../utils/constants/types";
 
 const deploymentsCasted = deployments as Partial<
   Record<SupportedChainIdNames | string, Record<VaultNames | string, string>>
