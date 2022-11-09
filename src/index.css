@@ -23,10 +23,6 @@
   .raise {
     transition: transform ease 100ms;
   }
-
-  .click-pushed-down:active {
-    transform: scale(0.95, 0.95);
-  }
 }
 
 body {

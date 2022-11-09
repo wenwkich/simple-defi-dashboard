@@ -18,8 +18,10 @@ export const useUserSignInInfos = () => {
   const assets = useMemo(() => getAssetAddresses(), [vaultData]);
   const getUserSignInInfos = getUserSignInInfosSdk({ provider, chainName });
 
-  const queryResult = useOnBlockRefetchQuery("signIn", () =>
-    getUserSignInInfos(account, vaultData, assets)
+  const queryResult = useOnBlockRefetchQuery(
+    "signIn",
+    () => getUserSignInInfos(account, assets),
+    !!vaultData
   );
 
   return {
@@ -31,7 +33,7 @@ export const useUserSignInInfos = () => {
     getVaultBalance: useCallback(
       (address: string) =>
         queryResult.data?.vaults
-          ? queryResult.data?.vaults[address].balance
+          ? queryResult.data?.vaults[address]?.balance
           : undefined,
       [queryResult.data]
     ),
@@ -42,9 +44,9 @@ export const useUserSignInInfos = () => {
     getTokenBalance: useCallback(
       (address: string) =>
         queryResult.data?.tokens
-          ? queryResult.data?.tokens[address].balance
+          ? queryResult.data?.tokens[address]?.balance
           : undefined,
-      []
+      [queryResult.data]
     ),
   };
 };

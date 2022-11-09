@@ -28,7 +28,6 @@ export type VaultSignInInfos = Record<string, VaultSignInInfo>;
 
 export type TokenSignInInfo = Balance;
 export interface TokenInfo {
-  name: string;
   symbol: string;
   decimals: string;
   address: string;

@@ -21,10 +21,6 @@ export const withConnectWallet =
         <WrappedComponent {...props} />
       )
     ) : (
-      <div className="connect flex justify-center items-center grow-0">
-        <div className="h-30">
-          <ConnectWallet />
-        </div>
-      </div>
+      <div>Please connect your wallet.</div>
     );
   };

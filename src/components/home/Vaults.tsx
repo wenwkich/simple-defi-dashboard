@@ -2,16 +2,16 @@ import React, { useMemo, useState } from "react";
 import { useVaults } from "../../hooks/vaults/useVaults";
 import VaultCard from "./VaultCard";
 import _ from "lodash";
-import { useAssetInfos } from "../../hooks/tokens/useAssetInfos";
 import { Link } from "react-router-dom";
-import { Skeleton, Tag, TagLabel } from "@chakra-ui/react";
+import { Skeleton } from "@chakra-ui/react";
+import { useUserSignInInfos } from "../../hooks/signin/useUserSignInInfos";
 
 export function Vaults() {
   const { getAllVaults, isLoading } = useVaults();
+  const { getVaultBalance, getTokenBalance } = useUserSignInInfos();
 
   const vaults = getAllVaults();
 
-  // TODO: sort by
   return (
     <>
       {isLoading ? (
@@ -20,9 +20,12 @@ export function Vaults() {
         <div className="flex flex-col mt-10 w-full">
           <div className="grid grid-cols-3 content-start justify-center gap-4 flex-wrap mt-4 mb-20">
             {_.map(vaults, (details, key) => (
-              <Link to={`/vaults/${details.address}`}>
-                <VaultCard key={key} vault={details} />
-              </Link>
+              <VaultCard
+                key={key}
+                vault={details}
+                deposited={getVaultBalance(key)}
+                balance={getTokenBalance(details.asset)}
+              />
             ))}
           </div>
         </div>

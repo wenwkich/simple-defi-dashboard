@@ -6,7 +6,6 @@ import {
   Interface,
 } from "ethers/lib/utils";
 import { Chain } from "@web3-onboard/common";
-import { TokenInfoWithBalanceAndIsNative } from "../interfaces";
 import { JsonFragment } from "@ethersproject/abi";
 import _ from "lodash";
 
@@ -57,45 +56,13 @@ export function roundToTwoDecimals(x: number) {
   return Math.round((x + Number.EPSILON) * 100) / 100;
 }
 
-export const tryToConvertTokenToNative = async (
-  chainInfo: Chain | undefined,
-  tokenInfo: TokenInfoWithBalanceAndIsNative,
-  address: string | undefined,
-  provider: ethers.providers.BaseProvider | undefined
-) => {
-  const nativeTokenName = chainInfo?.token;
-  const wrappedTokenName = tokenInfo.symbol;
-  const isNative =
-    wrappedTokenName === nativeTokenName ||
-    wrappedTokenName.substring(1) === nativeTokenName;
-
-  return isNative
-    ? {
-        ...tokenInfo,
-        balance: provider
-          ? +formatEther(await provider.getBalance(address || "0x0"))
-          : 0,
-        symbol: chainInfo?.token,
-        native: true,
-      }
-    : tokenInfo;
-};
-
 export const erc20Abi = (() => {
   const erc20StringAbi = [
     "function balanceOf(address owner) view returns (uint)",
+    "function decimals() view returns (uint8)",
+    "function symbol() view returns (string)",
   ];
   return new Interface(erc20StringAbi).fragments.map((fragment) =>
     JSON.parse(fragment.format(FormatTypes.json))
   );
 })() as JsonFragment[];
-
-export const transformEs6MapToArrays = <K, V>(inputs: Map<K, V>) => {
-  return _.map(Array.from(inputs), ([, value]) => value);
-};
-
-export const transfromRecordToEs6Map = <K extends string, V>(
-  from: Partial<Record<K, V>>
-) => {
-  return new Map(Object.entries(from)) as Map<K, V>;
-};

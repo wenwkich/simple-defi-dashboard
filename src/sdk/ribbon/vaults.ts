@@ -1,4 +1,4 @@
-import deployments from "../deployments/deployments.json";
+import deployments from "./deployments/ribbon-deployments.json";
 import _ from "lodash";
 import { SupportedChainIdNames, VaultDefs, VaultNames } from "./types";
 
@@ -8,20 +8,29 @@ const deploymentsCasted = deployments as Partial<
 
 // define your basic info in this page
 export const VAULT_DECLARATIONS = {
-  ETH_VAULT: {
-    name: "ETH Garden",
-    description: "Maximize your ETH yield",
-    emoji: "🌻",
+  RibbonDeltaVaultETHCall: {
+    name: "Ribbon Delta ETH Call Vault",
   },
-  AVAX_VAULT: {
-    name: "AVAX Shark",
-    description: "Stake AVAX for maximum rewards",
-    emoji: "🦈",
+  RibbonThetaVaultAAVECall: {
+    name: "Ribbon Theta AAVE Call Vault",
   },
-  WBTC_VAULT: {
-    name: "WBTC Hodl",
-    description: "BTC is your best choice to hodl",
-    emoji: "🌟",
+  RibbonThetaVaultETHCall: {
+    name: "Ribbon Theta ETH Call Vault",
+  },
+  RibbonThetaVaultSTETHCall: {
+    name: "Ribbon Theta STETH Call Vault",
+  },
+  RibbonThetaVaultRETHCall: {
+    name: "Ribbon Theta RETH Call Vault",
+  },
+  RibbonThetaVaultWBTCCall: {
+    name: "Ribbon Theta WBTC Call Vault",
+  },
+  RibbonThetaYearnVaultETHPut: {
+    name: "Ribbon Theta ETH Put Vault",
+  },
+  RibbonThetaVaultAPECall: {
+    name: "Ribbon Theta APE Call Vault",
   },
 };
 
