@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Limbu&display=swap");
+
 @layer utilities {
   /* Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
@@ -22,17 +24,13 @@
     transition: transform ease 100ms;
   }
 
-  .card {
-    @apply raise hover:shadow-xl;
-  }
-
   .click-pushed-down:active {
     transform: scale(0.95, 0.95);
   }
 }
 
 body {
-  font-family: "Source Sans Pro", sans-serif !important;
+  font-family: "Noto Sans Limbu", sans-serif;
 }
 
 .wallet > .connect {

@@ -1,9 +1,3 @@
-import { getVaultInfosSdk, getUserSignInInfosSdk } from "./read";
-import { depositNativeSdk, depositSdk } from "./write";
+import { getVaultInfosSdk, getUserSignInInfosSdk } from "./ribbon";
 
-export {
-  getVaultInfosSdk,
-  getUserSignInInfosSdk,
-  depositNativeSdk,
-  depositSdk,
-};
+export { getVaultInfosSdk, getUserSignInInfosSdk };

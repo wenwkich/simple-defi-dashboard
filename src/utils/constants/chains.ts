@@ -1,11 +1,18 @@
 import { hexlify } from "..";
 import _ from "lodash";
-import { Localhost, Goerli, Chain } from "@usedapp/core";
+import { Localhost, Goerli, Chain, Config, Mainnet } from "@usedapp/core";
 import { SupportedChainIdNames } from "./types";
+import { getDefaultProvider } from "ethers";
 
 const chains: Record<SupportedChainIdNames | string, Chain> = {
-  goerli: Goerli,
-  localhost: Localhost,
+  mainnet: Mainnet,
+};
+
+export const config: Config = {
+  readOnlyChainId: Mainnet.chainId,
+  readOnlyUrls: {
+    [Mainnet.chainId]: getDefaultProvider("mainnet"),
+  },
 };
 
 const chainIdToName = _.reduce(

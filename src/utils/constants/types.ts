@@ -1,6 +1,6 @@
 import { VAULT_DECLARATIONS } from "./vaults";
 
-export type SupportedChainIdNames = "localhost" | "goerli";
+export type SupportedChainIdNames = "mainnet";
 export type ContractNamespace = "tokens" | "vaults";
 export type VaultDeclarations = typeof VAULT_DECLARATIONS;
 export type VaultNames = keyof VaultDeclarations;
