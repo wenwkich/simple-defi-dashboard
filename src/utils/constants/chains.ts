@@ -1,7 +1,6 @@
-import { hexlify } from "..";
 import _ from "lodash";
-import { Localhost, Goerli, Chain, Config, Mainnet } from "@usedapp/core";
-import { SupportedChainIdNames } from "./types";
+import { Chain, Config, Mainnet } from "@usedapp/core";
+import { SupportedChainIdNames } from "../../sdk/ribbon/types";
 import { getDefaultProvider } from "ethers";
 
 const chains: Record<SupportedChainIdNames | string, Chain> = {
