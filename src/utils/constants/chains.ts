@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { Chain, Config, Mainnet } from "@usedapp/core";
-import { SupportedChainIdNames } from "../../sdk/ribbon/types";
 import { getDefaultProvider } from "ethers";
+import { SupportedChainIdNames } from "./types";
 
 const chains: Record<SupportedChainIdNames | string, Chain> = {
   mainnet: Mainnet,

@@ -1,7 +1,9 @@
+import {
+  ContractNamespace,
+  SupportedChainIdNames,
+} from "../../utils/constants/types";
 import { VAULT_DECLARATIONS } from "./vaults";
 
-export type SupportedChainIdNames = "mainnet";
-export type ContractNamespace = "tokens" | "vaults";
 export type VaultDeclarations = typeof VAULT_DECLARATIONS;
 export type VaultNames = keyof VaultDeclarations;
 

@@ -1,9 +1,10 @@
 import { ethers } from "ethers";
+
+import { MulticallResultBase } from "declarative-multicall";
 import {
   ContractNamespace,
   SupportedChainIdNames,
 } from "../utils/constants/types";
-import { MulticallResultBase } from "declarative-multicall";
 
 // key of the record: address
 export type Infos<T> = Record<string, T & MulticallResultBase>;
