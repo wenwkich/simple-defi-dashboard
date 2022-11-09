@@ -2,7 +2,6 @@ import _ from "lodash";
 import { formatUnits } from "ethers/lib/utils";
 import {
   EthersReadFactory,
-  MulticallInput,
   Results,
   TokenInfo,
   TokenSignInInfo,
@@ -12,8 +11,7 @@ import {
   VaultSignInInfos,
 } from "./types";
 import { Vault__factory } from "../utils/typechain";
-import { doMulticall } from "./utils";
-import { Contract } from "ethcall";
+import { doMulticall, MulticallOption } from "declarative-multicall";
 import { getVaultDefs } from "../utils/constants/vaults";
 import { erc20Abi } from "../utils";
 
@@ -23,24 +21,21 @@ export const getVaultInfosSdk: EthersReadFactory<Results<VaultInfos>> =
     const nspace = "vaults";
 
     const vaultDefs = getVaultDefs(chainName);
-    const toContract = (vaultAddress: string) => {
-      return new Contract(vaultAddress, Vault__factory.abi);
-    };
 
-    const toVaultParamCall = (contract: Contract) => contract.vaultParams();
-    const tototalBalanceCalls = (contract: Contract) => contract.totalBalance();
+    const toVaultParamCall = (contract: any) => contract.vaultParams();
+    const tototalBalanceCalls = (contract: any) => contract.totalBalance();
 
-    const vaultsInput: MulticallInput<VaultInfo> = {
+    const vaultsInput: MulticallOption<VaultInfo> = {
       inputInfos: _.map(vaultDefs, (def) => ({
         address: def!.address,
         id: def!.id,
         nspace,
       })),
-      contractMapper: toContract,
+      abi: Vault__factory.abi,
       callMappers: [toVaultParamCall, tototalBalanceCalls],
       resultsMapper: () => (results) => {
         const [vaultParams, totalBalance] = results;
-        const [, decimals, asset, cap] = vaultParams;
+        const [, decimals, asset, , , cap] = vaultParams;
         return {
           asset,
           decimals,
@@ -65,21 +60,18 @@ export const getUserSignInInfosSdk: EthersReadFactory<
     tokens: string[]
   ) => {
     const vaultDefs = getVaultDefs(chainName);
-    const toVaultContract = (address: string) => {
-      return new Contract(address, Vault__factory.abi);
-    };
 
-    const vaultAddressToBalanceCalls = (contract: Contract) =>
+    const vaultAddressToBalanceCalls = (contract: any) =>
       contract.deposits(userAddress);
 
-    const vaultsInput: MulticallInput<VaultSignInInfo> = {
+    const vaultsInput: MulticallOption<VaultSignInInfo> = {
       inputInfos: _.map(vaultDefs, (def) => ({
         address: def!.address,
         id: def!.id,
         nspace: "vaults",
         decimals: vaultInfos[def!.address]?.decimals,
       })),
-      contractMapper: toVaultContract,
+      abi: Vault__factory.abi,
       callMappers: [vaultAddressToBalanceCalls],
       resultsMapper: (info) => (results) => {
         const [deposit] = results;
@@ -90,22 +82,18 @@ export const getUserSignInInfosSdk: EthersReadFactory<
       },
     };
 
-    const toTokenContract = (address: string) => {
-      return new Contract(address, erc20Abi);
-    };
-
-    const toTokenBalanceCalls = (contract: Contract) =>
+    const toTokenBalanceCalls = (contract: any) =>
       contract.balanceOf(userAddress);
-    const toTokenNameCalls = (contract: Contract) => contract.name();
-    const toTokenSymbolCalls = (contract: Contract) => contract.symbol();
-    const toTokenDecimalsCalls = (contract: Contract) => contract.decimals();
+    const toTokenNameCalls = (contract: any) => contract.name();
+    const toTokenSymbolCalls = (contract: any) => contract.symbol();
+    const toTokenDecimalsCalls = (contract: any) => contract.decimals();
 
-    const tokensInput: MulticallInput<TokenSignInInfo & TokenInfo> = {
+    const tokensInput: MulticallOption<TokenSignInInfo & TokenInfo> = {
       inputInfos: _.map(tokens, (address) => ({
         address,
         nspace: "tokens",
       })),
-      contractMapper: toTokenContract,
+      abi: erc20Abi,
       callMappers: [
         toTokenBalanceCalls,
         toTokenNameCalls,

@@ -3,7 +3,7 @@ import {
   ContractNamespace,
   SupportedChainIdNames,
 } from "../utils/constants/types";
-import { Call, Contract } from "ethcall";
+import { MulticallResultBase } from "declarative-multicall";
 
 // key of the record: address
 export type Infos<T> = Record<string, T & MulticallResultBase>;
@@ -44,23 +44,6 @@ export interface SdkOptions {
   provider: ethers.providers.BaseProvider;
   signer: ethers.Signer;
 }
-
-export interface MulticallResultBase {
-  address: string;
-  nspace: string;
-  [key: string]: any;
-}
-
-export interface MulticallInput<T> {
-  inputInfos: MulticallResultBase[];
-  contractMapper: (input: string) => Contract;
-  callMappers: ((contract: Contract) => Call)[];
-  resultsMapper: (resultBase: MulticallResultBase) => (callResults: any[]) => T;
-}
-
-export type MulticallInputs<T> = Partial<
-  Record<ContractNamespace, MulticallInput<T>>
->;
 
 export type SdkReadOptions = Omit<SdkOptions, "signer">;
 export type SdkWriteOptions = Omit<SdkOptions, "provider">;

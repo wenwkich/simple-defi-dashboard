@@ -2,7 +2,6 @@
   "name": "sample-staking-interface",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -10,10 +9,13 @@
   },
   "dependencies": {
     "@chakra-ui/react": "^2.3.6",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@tanstack/react-query": "^4.12.0",
     "@usedapp/core": "^1.1.5",
-    "ethcall": "^4.8.6",
+    "declarative-multicall": "^1.0.2",
     "ethers": "^5.7.2",
+    "framer-motion": "^7.6.5",
     "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
